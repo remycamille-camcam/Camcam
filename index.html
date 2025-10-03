@@ -22,5 +22,33 @@
       <td><input type="number" value="0"></td>
     </tr>
   </table>
+  <script>
+function ajouterLigne() {
+  const table = document.querySelector("table");
+  const row = table.insertRow(-1);
+  row.innerHTML = `
+    <td><input type="text" placeholder="Nom ingrédient"></td>
+    <td><input type="number" value="0" class="pourcentage"></td>
+    <td><input type="number" value="0" class="prix"></td>
+  `;
+}
+
+function calculer() {
+  let totalPourcentage = 0;
+  let totalPrix = 0;
+
+  document.querySelectorAll("tr").forEach((tr, i) => {
+    if (i === 0) return; // ignorer l'en-tête
+    const p = tr.querySelector(".pourcentage")?.value || 0;
+    const prix = tr.querySelector(".prix")?.value || 0;
+    totalPourcentage += parseFloat(p);
+    totalPrix += (parseFloat(p) / 100) * parseFloat(prix);
+  });
+
+  document.getElementById("result").innerText =
+    "Total % : " + totalPourcentage + " % | Prix de revient : " + totalPrix.toFixed(2) + " €";
+}
+</script>
+
 </body>
 </html>
